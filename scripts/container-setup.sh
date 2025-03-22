@@ -66,6 +66,7 @@ fi
 # Step 5: validate
 echo -n "Validating Porkbun access"
 AUTH=$(curl -sSL -X POST "$ENDPOINT/ping"\
+  -H "Content-Type: application/json"\
   --data "{\"secretapikey\":\"$SECRET_API_KEY\",\"apikey\":\"$API_KEY\"}")
 
 if [ $(echo "$AUTH" | jq -r '.status') != "SUCCESS" ]; then
@@ -77,6 +78,7 @@ fi
 
 echo -n "Validating Porkbun dns record details"
 RECORD=$(curl -sSL -X POST "$ENDPOINT/dns/retrieveByNameType/$DOMAIN/$RECORD_TYPE/$SUBDOMAIN"\
+  -H "Content-Type: application/json"\
   --data "{\"secretapikey\":\"$SECRET_API_KEY\",\"apikey\":\"$API_KEY\"}")
 
 if [ $(echo "$RECORD" | jq -r '.status') != "SUCCESS" ]; then

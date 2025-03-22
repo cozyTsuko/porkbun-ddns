@@ -50,6 +50,7 @@ if [ "$OLD_IP" == "$CURRENT_IP" ]; then
 # Step 3: Update ddns
 else
   update=$(curl -sSL -X POST "$ENDPOINT/dns/editByNameType/$DOMAIN/$RECORD_TYPE/$SUBDOMAIN"\
+    -H "Content-Type: application/json"\
     --data "{\"secretapikey\":\"$SECRET_API_KEY\",\"apikey\":\"$API_KEY\",\"content\":\"$CURRENT_IP\",\"ttl\":\"$TTL\"}")
 
   if [ $(echo "$update" | jq -r '.status') == "SUCCESS" ]; then
